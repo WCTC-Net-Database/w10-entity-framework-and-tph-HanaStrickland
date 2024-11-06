@@ -21,6 +21,44 @@ namespace W9_assignment_template.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AbilityCharacter", b =>
+                {
+                    b.Property<int>("AbilitiesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharactersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AbilitiesId", "CharactersId");
+
+                    b.HasIndex("CharactersId");
+
+                    b.ToTable("CharacterAbilities", (string)null);
+                });
+
+            modelBuilder.Entity("W9_assignment_template.Models.Ability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Abilities");
+
+                    b.HasDiscriminator<string>("Name").HasValue("Ability");
+                });
+
             modelBuilder.Entity("W9_assignment_template.Models.Character", b =>
                 {
                     b.Property<int>("Id")
@@ -29,7 +67,7 @@ namespace W9_assignment_template.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Discriminator")
+                    b.Property<string>("CharacterType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -49,7 +87,7 @@ namespace W9_assignment_template.Migrations
 
                     b.ToTable("Characters");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Character");
+                    b.HasDiscriminator<string>("CharacterType").HasValue("Character");
                 });
 
             modelBuilder.Entity("W9_assignment_template.Models.Room", b =>
@@ -73,6 +111,27 @@ namespace W9_assignment_template.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("W9_assignment_template.Models.AbilitiesCatalog.ShapeshiftAbility", b =>
+                {
+                    b.HasBaseType("W9_assignment_template.Models.Ability");
+
+                    b.HasDiscriminator().HasValue("Shapeshift");
+                });
+
+            modelBuilder.Entity("W9_assignment_template.Models.AbilitiesCatalog.StabAbility", b =>
+                {
+                    b.HasBaseType("W9_assignment_template.Models.Ability");
+
+                    b.HasDiscriminator().HasValue("Stab");
+                });
+
+            modelBuilder.Entity("W9_assignment_template.Models.AbilitiesCatalog.WalkAbility", b =>
+                {
+                    b.HasBaseType("W9_assignment_template.Models.Ability");
+
+                    b.HasDiscriminator().HasValue("Walk");
+                });
+
             modelBuilder.Entity("W9_assignment_template.Models.Goblin", b =>
                 {
                     b.HasBaseType("W9_assignment_template.Models.Character");
@@ -91,6 +150,21 @@ namespace W9_assignment_template.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("Player");
+                });
+
+            modelBuilder.Entity("AbilityCharacter", b =>
+                {
+                    b.HasOne("W9_assignment_template.Models.Ability", null)
+                        .WithMany()
+                        .HasForeignKey("AbilitiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("W9_assignment_template.Models.Character", null)
+                        .WithMany()
+                        .HasForeignKey("CharactersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("W9_assignment_template.Models.Character", b =>
