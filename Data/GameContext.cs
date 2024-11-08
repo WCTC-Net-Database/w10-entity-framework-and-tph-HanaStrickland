@@ -44,29 +44,22 @@ public class GameContext : DbContext
 
     public void Seed()
     {
-        if (!Rooms.Any())
-        {
-            var room1 = new Room { Name = "Entrance Hall", Description = "The main entry." };
-            var room2 = new Room { Name = "Treasure Room", Description = "A room filled with treasures." };
+        
+        var room1 = new Room { Name = "Entrance Hall", Description = "The main entry." };
+        var room2 = new Room { Name = "Treasure Room", Description = "A room filled with treasures." };
 
-            var character1 = new Player { Name = "Jane", Level = 1, Room = room1 };
-            var character2 = new Goblin { Name = "JoJo", Level = 2, Room = room2 };
+        var character1 = new Player { Name = "Jane", Level = 1, Room = room1 };
+        var character2 = new Goblin { Name = "JoJo", Level = 2, Room = room2 };
 
-            Rooms.AddRange(room1, room2);
-            Characters.AddRange(character1, character2);
+        Rooms.AddRange(room1, room2);
+        Characters.AddRange(character1, character2);
+    
+        var walk = new WalkAbility {Description = "The Character Can Walk."};
+        var stab = new StabAbility {Description = "The Character Can Stab."};
+        var shapeshift = new ShapeshiftAbility {Description = "The Character Can Shapeshift."};
 
-            SaveChanges();
-        }
+        Abilities.AddRange(walk, stab, shapeshift);
 
-        if (!Abilities.Any())
-        {
-            var walk = new WalkAbility {Description = "The Character Can Walk."};
-            var stab = new StabAbility {Description = "The Character Can Stab."};
-            var shapeshift = new ShapeshiftAbility {Description = "The Character Can Shapeshift."};
-
-            Abilities.AddRange(walk, stab, shapeshift);
-
-            SaveChanges();
-        }
+        SaveChanges();
     }
 }

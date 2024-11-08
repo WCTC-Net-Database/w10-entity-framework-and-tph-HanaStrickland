@@ -111,27 +111,6 @@ namespace W9_assignment_template.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("W9_assignment_template.Models.AbilitiesCatalog.ShapeshiftAbility", b =>
-                {
-                    b.HasBaseType("W9_assignment_template.Models.Ability");
-
-                    b.HasDiscriminator().HasValue("Shapeshift");
-                });
-
-            modelBuilder.Entity("W9_assignment_template.Models.AbilitiesCatalog.StabAbility", b =>
-                {
-                    b.HasBaseType("W9_assignment_template.Models.Ability");
-
-                    b.HasDiscriminator().HasValue("Stab");
-                });
-
-            modelBuilder.Entity("W9_assignment_template.Models.AbilitiesCatalog.WalkAbility", b =>
-                {
-                    b.HasBaseType("W9_assignment_template.Models.Ability");
-
-                    b.HasDiscriminator().HasValue("Walk");
-                });
-
             modelBuilder.Entity("W9_assignment_template.Models.Goblin", b =>
                 {
                     b.HasBaseType("W9_assignment_template.Models.Character");
@@ -150,6 +129,27 @@ namespace W9_assignment_template.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("Player");
+                });
+
+            modelBuilder.Entity("W9_assignment_template.Models.ShapeshiftAbility", b =>
+                {
+                    b.HasBaseType("W9_assignment_template.Models.Ability");
+
+                    b.HasDiscriminator().HasValue("Shapeshift");
+                });
+
+            modelBuilder.Entity("W9_assignment_template.Models.StabAbility", b =>
+                {
+                    b.HasBaseType("W9_assignment_template.Models.Ability");
+
+                    b.HasDiscriminator().HasValue("Stab");
+                });
+
+            modelBuilder.Entity("W9_assignment_template.Models.WalkAbility", b =>
+                {
+                    b.HasBaseType("W9_assignment_template.Models.Ability");
+
+                    b.HasDiscriminator().HasValue("Walk");
                 });
 
             modelBuilder.Entity("AbilityCharacter", b =>
